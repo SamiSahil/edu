@@ -1,12 +1,16 @@
 import { env } from './env.js';
 
 export function buildCorsOptions() {
+  const allowed = String(env.FRONTEND_ORIGIN || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   return {
     origin: (origin, callback) => {
-      // Allow same-origin/server-to-server calls (no origin)
       if (!origin) return callback(null, true);
 
-      const allowed = [env.FRONTEND_ORIGIN].filter(Boolean);
+      // Exact allowlist
       if (allowed.includes(origin)) return callback(null, true);
 
       return callback(new Error(`CORS blocked for origin: ${origin}`));
