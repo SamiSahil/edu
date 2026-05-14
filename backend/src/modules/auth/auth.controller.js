@@ -145,7 +145,7 @@ export async function forgotPassword(req, res) {
  * This should be disabled in production.
  */
 export async function demoCredentials(req, res) {
-  if (env.NODE_ENV === 'production') {
+  if (env.NODE_ENV === 'development') {
     throw new AppError('Not available in production.', 404, 'NOT_FOUND');
   }
 
